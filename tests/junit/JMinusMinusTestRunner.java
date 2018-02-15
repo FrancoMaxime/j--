@@ -8,6 +8,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import pass.*;
 
+
 /**
  * JUnit test suite for running the j-- programs in tests/pass.
  */
@@ -20,6 +21,7 @@ public class JMinusMinusTestRunner {
         suite.addTestSuite(FactorialTest.class);
         suite.addTestSuite(SeriesTest.class);
         suite.addTestSuite(ClassesTest.class);
+        suite.addTestSuite(DivisionTest.class);
         return suite;
     }
 
