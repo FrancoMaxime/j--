@@ -177,9 +177,11 @@ class Scanner {
                 nextCh();
                 return new TokenInfo(LAND, line);
             } else {
-                reportScannerError("Operator & is not supported in j--.");
-                return getNextToken();
+                return new TokenInfo(BITWISE_AND, line);
             }
+        case '~':
+            nextCh();
+            return new TokenInfo(BITWISE_COMP, line);
         case '>':
             nextCh();
             return new TokenInfo(GT, line);

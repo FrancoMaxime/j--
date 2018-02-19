@@ -1022,15 +1022,29 @@ public class Parser {
     private JExpression conditionalAndExpression() {
         int line = scanner.token().line();
         boolean more = true;
-        JExpression lhs = equalityExpression();
+        JExpression lhs = bitwiseAndExpression();
         while (more) {
             if (have(LAND)) {
-                lhs = new JLogicalAndOp(line, lhs, equalityExpression());
+                lhs = new JLogicalAndOp(line, lhs, bitwiseAndExpression());
             } else {
                 more = false;
             }
         }
         return lhs;
+    }
+    
+    private JExpression bitwiseAndExpression() {
+    	int line = scanner.token().line();
+        boolean more = true;
+        JExpression lhs = equalityExpression();
+        while (more) {
+            if (have(BITWISE_AND)) {
+                lhs = new JBitwiseAndOp(line, lhs, equalityExpression());
+            } else {
+                more = false;
+            }
+        }
+        return lhs;    	
     }
 
     /**
@@ -1158,6 +1172,8 @@ public class Parser {
             return new JPreIncrementOp(line, unaryExpression());
         } else if (have(MINUS)) {
             return new JNegateOp(line, unaryExpression());
+        } else if (have(BITWISE_COMP)) {
+            return new JBitwiseCompOp(line, unaryExpression());
         } else {
             return simpleUnaryExpression();
         }

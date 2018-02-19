@@ -72,8 +72,11 @@ expression ::= assignmentExpression
 assignmentExpression ::= conditionalAndExpression  // must be a valid lhs
                            [(ASSIGN | PLUS_ASSIGN) assignmentExpression]
 
-conditionalAndExpression ::= equalityExpression // level 10
-                               {LAND equalityExpression}
+conditionalAndExpression ::= bitwiseAndExpression // level 10
+                               {LAND bitwiseAndExpression}
+                               
+bitwiseAndExpression ::= equalityExpression  // level 7
+                            {BITWISE_AND equalityExpression}
 
 equalityExpression ::= relationalExpression  // level 6
                          {EQUAL relationalExpression}
@@ -91,6 +94,8 @@ multiplicativeExpression ::= unaryExpression       // level 2
 unaryExpression ::= INC unaryExpression  // level 1
                   | MINUS unaryExpression
                   | simpleUnaryExpression
+                  | BITWISE_COMP unaryExpression
+                  
 
 simpleUnaryExpression ::= LNOT unaryExpression
                         | LPAREN basicType RPAREN unaryExpression //casted
